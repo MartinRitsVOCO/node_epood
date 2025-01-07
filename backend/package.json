@@ -1,0 +1,24 @@
+{
+  "name": "node_epood",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinRitsVOCO/node_epood.git"
+  },
+  "keywords": ["nodejs", "express", "mariadb"],
+  "author": "Martin Ritsberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MartinRitsVOCO/node_epood/issues"
+  },
+  "homepage": "https://github.com/MartinRitsVOCO/node_epood#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mariadb": "^3.4.0"
+  }
+}
