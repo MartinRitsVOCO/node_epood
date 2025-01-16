@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Martin Ritsberg">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="description" content="Progameerimise harjutus">
+    <link rel="stylesheet" href="styles.css">
+    <title>E-pood</title>
+</head>
+<body>
+    <div class="main-nav--container">
+        <h1>Webshop EG</h1>
+        <nav>
+            <a href="/prog-alused-e-pood/" class="route">Products</a>
+            <a href="/prog-alused-e-pood/favorites" class="route">Favorites</a>
+            <a href="/prog-alused-e-pood/cart" class="route">Cart (<span id="main-nav--cart-amount"></span>)</a>
+        </nav>
+    </div>
+
+    <div id="view-container"></div>
+
+    <div id="modal" class="--hidden">
+        <div id="modal-container">
+            <section id="modal-view"></section>
+            <button id="modal--close-button"></button>
+        </div>
+    </div>
+    
+    <script type="module" src="main.js"></script>
+</body>
+</html>

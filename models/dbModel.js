@@ -1,5 +1,5 @@
-const mariadb = require('mariadb');
-const credentials = require('../credentials.json');
+import mariadb from 'mariadb';
+import credentials from '../credentials.json' with { type: 'json' };
 
 async function getConnection() {
     try {
@@ -17,4 +17,4 @@ async function getConnection() {
     }
 }
 
-module.exports = { getConnection };
+export { getConnection };
