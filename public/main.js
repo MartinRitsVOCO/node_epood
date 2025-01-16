@@ -45,3 +45,5 @@ fetch('http://localhost:3000/api/products')
                 initRouter(productList, categoryList, cart, customer);
                 handleRouteChange();
             })
+
+export { productList };

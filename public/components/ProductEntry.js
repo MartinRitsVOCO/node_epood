@@ -15,7 +15,7 @@ export default class ProductEntry {
         this.productEntry.classList.add("product-entry");
 
         const productHeader = document.createElement("a");
-        productHeader.href = `${this.rootPath}/product/${this.product.id}`;
+        productHeader.href = `${this.rootPath}product/${this.product.id}`;
         productHeader.addEventListener("click", clickRouter);
 
         productHeader.appendChild(document.createElement("h3"));

@@ -5,7 +5,7 @@ import favoritesView from "./view/favorites.js";
 import productDetailsView from "./view/productDetails.js";
 
 // Initialize variables
-const rootPath = "/prog-alused-e-pood";
+const rootPath = "/";
 let currentView = "";
 let productList = [];
 let categoryList = [];
@@ -19,18 +19,18 @@ function handleRouteChange() {
     let isModal = false;
     
     switch (path) {
-        case rootPath + '/cart':
+        case rootPath + 'cart':
             view = cartView(cart, customer, rootPath);
             currentView = "cart";
         break;
         
-        case rootPath + '/favorites':
+        case rootPath + 'favorites':
             view = favoritesView(productList, cart, customer, rootPath);
             currentView = "favorites";
         break;
         
         default:
-            if (path.match(rootPath + '/product/[0-9]+')) {
+            if (path.match(rootPath + 'product/[0-9]+')) {
                 const productId = path.split('/').pop();
                 view = productDetailsView(productId, productList, cart, rootPath);
                 isModal = true;
