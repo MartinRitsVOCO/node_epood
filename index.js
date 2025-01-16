@@ -22,17 +22,12 @@ app.get('/api/products', (req, res) => {
           axios.get('https://fakestoreapi.com/products').then(apiResponse => {
             let queryData = [];
 
-            
-
-            // apiResponse.data.forEach((element, index, array) => {
-            //   queryData += `(${element.id}, ${element.price}, '${element.title.replace(/'/g, '\\\'')}', '${element.category.replace(/'/g, '\\\'')}', '${element.description.replace(/'/g, '\\\'')}', '${element.image}')`;
-            //   if (index < array.length - 1) {
-            //     queryData += ', ';
-            //   }
-            // });
+            apiResponse.data.forEach((element) => {
+              queryData.push([element.id, element.price, element.title, element.category, element.description, element.image]);
+            });
 
             getConnection().then(conn => { 
-              conn.query(`INSERT INTO products (id, price, title, category, description, image) VALUES ${queryData}`)
+              conn.batch(`INSERT INTO products (id, price, title, category, description, image) VALUES (?, ?, ?, ?, ?, ?)`, queryData)
               .then(() => {
                   res.json(apiResponse.data);
                 })
