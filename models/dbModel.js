@@ -7,7 +7,7 @@ async function getConnection() {
         const conn = await mariadb.createConnection(credentials);
 
         // Print connection thread
-        console.log(`Connected! (id=${conn.threadId})`);
+        // console.log(`Connected! (id=${conn.threadId})`);
 
         // Return connection
         return conn;

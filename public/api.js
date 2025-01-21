@@ -1,39 +1,24 @@
-import Product from "./class/Product";
-import { productList } from "./main";
-
-function getProductById(productId) {
-    const product = productList.find(product => product.id === productId);
-    if (product) {
-        return product;
-    } else {
-        fetch(`http://localhost:3000/api/products/${productId}`)
-            .then(response => response.json())
-            .then(data => {
-                productList.push(
-                    new Product(
-                        data.id,
-                        data.title,
-                        data.price,
-                        data.category,
-                        data.description,
-                        data.image
-                    )
-                );
-            })
-    }
+export async function getProductById(productId) {
+    const response = await fetch(`http://localhost:3000/api/products/id/${productId}`);
+    const data = response.json();
+    return data;
 }
 
-function getCategoryList() {
+export async function getProductsByCount(count = 10, offset = 0) {
+    const response = await fetch(`http://localhost:3000/api/products/count?count=${count}&offset=${offset}`);
+    const data = response.json();
+    return data;
+}
+
+export async function getProductsByCategory(category, count = 10, offset = 0) {
+    const response = await fetch(`http://localhost:3000/api/products/category/count?category=${category}&count=${count}&offset=${offset}`);
+    const data = response.json();
+    return data;
+}
+
+export function getCategoryList() {
     return fetch('http://localhost:3000/api/categories')
         .then(response => response.json())
-        .then(data => {
-            return data;
-        });
-}
-
-function getProductCount() {
-    return fetch('http://localhost:3000/api/product-count')
-        .then(response => response.text())
         .then(data => {
             return data;
         });

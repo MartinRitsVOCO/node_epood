@@ -54,7 +54,7 @@ app.get('/api/products', (req, res) => {
   })
 });
 
-app.get('/api/products/:id', (req, res) => {
+app.get('/api/products/id/:id', (req, res) => {
   const productId = req.params.id;
   getConnection().then(conn => {
     conn.query('SELECT * FROM products WHERE id = ?', [productId])
@@ -75,27 +75,7 @@ app.get('/api/products/:id', (req, res) => {
   })
 });
 
-app.get('/api/categories/', (req, res) => {
-  getConnection().then(conn => {
-    conn.query('SELECT DISTINCT category FROM products')
-      .then(rows => {
-        if (rows.length > 0) {
-          res.json(rows.map(row => row.category));
-        } else {
-          res.status(404).send('No categories found');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).send('Error retrieving categories from database');
-      })
-      .finally(() => {
-        conn.end();
-      });
-  })
-});
-
-app.get('/api/category/:category', (req, res) => {
+app.get('/api/products/category/:category', (req, res) => {
   const category = req.params.category;
   getConnection().then(conn => {
     conn.query('SELECT * FROM products WHERE category = ?', [category])
@@ -116,40 +96,85 @@ app.get('/api/category/:category', (req, res) => {
   })
 });
 
-app.get('/api/product-count/', (req, res) => {
+app.get('/api/products/count', (req, res) => {
+  const { count = 10, offset = 0 } = req.query;
+
+  if ( isNaN(parseInt(count)) || count < 1 || count > 100 ) {
+    return res.status(400).send('Count parameter must be a positive integer between 1 and 100');
+  }
+  if (isNaN(parseInt(offset)) || offset < 0 || !isFinite(offset)) {
+    return res.status(400).send('Offset parameter must be a positive integer');
+  }
+
   getConnection().then(conn => {
-    conn.query('SELECT COUNT(*) AS count FROM products')
+    conn.query('SELECT * FROM products LIMIT ? OFFSET ?', [parseInt(count), parseInt(offset)])
       .then(rows => {
         if (rows.length > 0) {
-          res.json(rows[0].count.toString());
+          res.json(rows);
         } else {
           res.status(404).send('No products found');
         }
       })
       .catch(err => {
         console.log(err);
-        res.status(500).send('Error retrieving product count from database');
+        res.status(500).send('Error retrieving products from database');
       })
       .finally(() => {
-        conn.end();customer
+        conn.end();
       });
   })
-});
+})
 
-app.get('api/product-count/:category', (req, res) => {
-  const category = req.params.category;
+app.get('api/products/category/count', (req, res) => {
+  const { category, count = 10, offset = 0 } = req.query;
+
+  if (!category) {
+    return res.status(400).send('Category parameter is required');
+  }
+  if ( isNaN(parseInt(count)) || count < 1 || count > 100 ) {
+    return res.status(400).send('Count parameter must be a positive integer between 1 and 100');
+  }
+  if (isNaN(parseInt(offset)) || offset < 0 || isFinite(offset)) {
+    return res.status(400).send('Offset parameter must be a positive integer');
+  }
+
   getConnection().then(conn => {
-    conn.query('SELECT COUNT(*) AS count FROM products WHERE category = ?', [category])
+    conn.query('SELECT * FROM products WHERE category = ? LIMIT ? OFFSET ?', [category, parseInt(count), parseInt(offset)])
       .then(rows => {
         if (rows.length > 0) {
-          res.json(rows[0].count.toString());
+          res.json(rows[0]);
         } else {
           res.status(404).send('No products found in this category');
         }
       })
       .catch(err => {
         console.log(err);
-        res.status(500).send('Error retrieving product count from database');
+        res.status(500).send('Error retrieving product from database');
+      })
+      .finally(() => {
+        conn.end();
+      });
+  })
+});
+
+
+app.get('/api/categories/', (req, res) => {
+  getConnection().then(conn => {
+    conn.query('SELECT category, COUNT(*) AS count FROM products GROUP BY category')
+      .then(rows => {
+        if (rows.length > 0) {
+          res.json(
+            rows.map((row) => ({
+              category: row.category,
+              count: row.count.toString(),
+            })));
+        } else {
+          res.status(404).send('No categories found');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).send('Error retrieving categories from database');
       })
       .finally(() => {
         conn.end();
