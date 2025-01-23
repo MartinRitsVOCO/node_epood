@@ -74,6 +74,18 @@
 #product-list #product-list--header #product-list--header--total-cost::before {
   content: "Total: ";
 }
+#product-list #product-list--header #product-list--header--buy-button {
+  height: 40px;
+  margin: auto 20px;
+  aspect-ratio: 1/1;
+  background-size: 100%;
+  background-image: url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!--%20License%3A%20CC%20Attribution.%20Made%20by%20Dmitriy%20Novikov%3A%20https%3A%2F%2Fwww.figma.com%2F%40novaslide%20--%3E%3Csvg%20width%3D%22800px%22%20height%3D%22800px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M3%208C3%206.34315%204.34315%205%206%205H18C19.6569%205%2021%206.34315%2021%208V16C21%2017.6569%2019.6569%2019%2018%2019H6C4.34315%2019%203%2017.6569%203%2016V8Z%22%20stroke%3D%22%23000000%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%2010H21%22%20stroke%3D%22%23000000%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M14%2015L17%2015%22%20stroke%3D%22%23000000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E);
+  transition: all 0.2s ease-in-out;
+}
+#product-list #product-list--header #product-list--header--buy-button:hover {
+  filter: brightness(0%) drop-shadow(0px 0px 5px rgb(0, 0, 0));
+  transform: scale(1.1);
+}
 #product-list #product-list--header #product-list--header--category-picker {
   width: 90%;
   max-width: 200px;

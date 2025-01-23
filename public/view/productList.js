@@ -102,6 +102,31 @@ export default function productListView(productList, categoryList, cart, custome
                     const productEntry = new ProductEntry(rootPath, productList.at(-1), cart, customer);
                     productListElement.appendChild(productEntry.render());
                 })
+            } else {
+                let categoryProducts = productList.filter(entry => entry.category === event.target.value);
+                if (categoryProducts.length < page * 4) {
+                    await getProductsByCategory(event.target.value, page * 4 - categoryProducts.length, (page - 1) * 4, JSON.stringify(customer.favorites))
+                        .then(newProducts => {
+                            newProducts.forEach(product => {
+                                productList.push(
+                                    new Product(
+                                        product.id,
+                                        product.title,
+                                        product.price,
+                                        product.category,
+                                        product.description,
+                                        product.image
+                                    )
+                                )
+                            })
+                        });
+                }
+                categoryProducts = productList.filter(entry => entry.category === event.target.value);
+                const availableProducts = categoryProducts.length - ( page - 1 ) * 4 > 4 ? 4 : categoryProducts.length - ( page - 1 ) * 4;
+                categoryProducts.slice((page - 1) * 4, availableProducts).forEach(product => {
+                    const productEntry = new ProductEntry(rootPath, product, cart, customer);
+                    productListElement.appendChild(productEntry.render());
+                })
             }
         }
     })

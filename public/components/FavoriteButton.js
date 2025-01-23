@@ -19,10 +19,23 @@ export default class FavoriteButton {
             this.button.classList.remove(`favorite-button--false`);
             this.customer.favorites.push(this.product.id);
             this.button.classList.add(`favorite-button--true`);
+
+            let favoritesStorage = [];
+            if (localStorage.getItem("favorites") !== null) {
+                favoritesStorage = JSON.parse(localStorage.getItem("favorites"));
+            }
+            favoritesStorage.push(this.product.id);
+            localStorage.setItem("favorites", JSON.stringify(favoritesStorage));
         } else {
             this.button.classList.remove(`favorite-button--true`);
             this.customer.favorites.splice(favoriteIndex, 1);
             this.button.classList.add(`favorite-button--false`);
+
+            if (localStorage.getItem("favorites") !== null) {
+                let favoritesStorage = JSON.parse(localStorage.getItem("favorites"));
+                favoritesStorage.splice(favoritesStorage.findIndex(entry => entry === this.product.id), 1);
+                localStorage.setItem("favorites", JSON.stringify(favoritesStorage));
+            }
         }
     }
 }

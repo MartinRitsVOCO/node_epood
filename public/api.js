@@ -1,18 +1,36 @@
 export async function getProductById(productId) {
-    const response = await fetch(`http://localhost:3000/api/products/id/${productId}`);
-    const data = response.json();
+    try {
+        const response = await fetch(`http://localhost:3000/api/products/id/${productId}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(data);
+        console.error(error);
+    }
     return data;
 }
 
 export async function getProductsByCount(count = 10, offset = 0) {
-    const response = await fetch(`http://localhost:3000/api/products/count?count=${count}&offset=${offset}`);
-    const data = response.json();
+    try {
+        const response = await fetch(`http://localhost:3000/api/products/count?count=${count}&offset=${offset}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(data);
+        console.error(error);
+    }
     return data;
 }
 
-export async function getProductsByCategory(category, count = 10, offset = 0) {
-    const response = await fetch(`http://localhost:3000/api/products/category/count?category=${category}&count=${count}&offset=${offset}`);
-    const data = response.json();
+export async function getProductsByCategory(category, count = 10, offset = 0, exclude = false) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/products/category/count?category=${category}&count=${count}&offset=${offset}&exclude=${exclude}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(data);
+        console.error(error);
+    }
     return data;
 }
 
